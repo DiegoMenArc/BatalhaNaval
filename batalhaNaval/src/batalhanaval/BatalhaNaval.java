@@ -18,15 +18,16 @@ public class BatalhaNaval {
     private static int escolha;
 
     public static void exibirMenu() {
-        System.out.println
-        ("""        
-            Bem-vindo ao Batalha Naval
-            1. Jogar
-            2. Como Jogar
-            3. Sair
-        """);
+        String[] opcoes = {"Jogar", "Como Jogar", "Sair"};
+//        JOptionPane.showMessageDialog(null, ("""        
+//            Bem-vindo ao Batalha Naval
+//            1. Jogar
+//            2. Como Jogar
+//            3. Sair
+//        """));
         
-        escolha = leitor.nextInt();
+        escolha = JOptionPane.showOptionDialog(null, "Bem-vindo ao Batalha Naval", "Select one:", 
+                                                      0, 3, null, opcoes, opcoes[0]);
         while (escolha != 1 && escolha != 2 && escolha != 3) {
            System.out.print("1. Sim  \n 2. Como Jogar \n 3. Sair");
            escolha = leitor.nextInt(); 
