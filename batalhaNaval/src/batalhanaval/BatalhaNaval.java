@@ -2,7 +2,7 @@ package batalhanaval;
 
 import java.util.Scanner;
 
-import java.util.Random;
+//import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -97,6 +97,8 @@ public class BatalhaNaval {
     }
 
     
+    
+    //Gerar Tabuleiro =======================================================================
     
     private static char letra = 65;
     private static int numero = 1, W, H;
