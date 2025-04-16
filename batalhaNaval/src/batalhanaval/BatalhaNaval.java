@@ -18,33 +18,28 @@ public class BatalhaNaval {
     private static int escolha;
 
     public static void exibirMenu() {
-        String[] opcoes = {"Jogar", "Como Jogar", "Sair"};
-//        JOptionPane.showMessageDialog(null, ("""        
-//            Bem-vindo ao Batalha Naval
-//            1. Jogar
-//            2. Como Jogar
-//            3. Sair
-//        """));
-        
+        String[] opcoes = {"Novo Jogo", "Como Jogar", "Sair"};
+
         escolha = JOptionPane.showOptionDialog(null, "Bem-vindo ao Batalha Naval", "Select one:", 
                                                       0, 3, null, opcoes, opcoes[0]);
-        while (escolha != 1 && escolha != 2 && escolha != 3) {
-           System.out.print("1. Sim  \n 2. Como Jogar \n 3. Sair");
-           escolha = leitor.nextInt(); 
-        }
+        
+        System.out.print(escolha);
         switch (escolha) {
-            case 1:
-                menuInicial();
+            case 0:
+                modosJogo();
                 break;
-            case 2:
+            case 1:
                 exibirTutorial();
                 break;
-            case 3:
+            case 2:
                 System.exit(0);
             default:
+                exibirMenu();
                 break;
         }
     }
+    
+    //Menu Tutorial ========================================================================================
     
     public static void exibirTutorial() {
         int escolhaT;
@@ -75,85 +70,19 @@ public class BatalhaNaval {
         }
     }
     
-    public static void menuInicial() {
-        int escolhaMenu;
-        System.out.print("1. Jogar \n 2. Sair");
-        escolhaMenu = leitor.nextInt();
-        while (escolhaMenu != 1 && escolhaMenu != 2) {
-            escolhaMenu = leitor.nextInt();
-        }
-        switch (escolhaMenu) {
-            case 1: modosJogo();break;
-            case 2: exibirTutorial(); break;
-            case 3: System.exit(0); break;
-        }
-    }
+    //Modo de Jogo ==========================================================================================
 
     public static void modosJogo() {
-        System.out.print("Escolha o modo de jogo: \n 1. Contra máquina \n 2. Contra um jogador.");
-        escolha = leitor.nextInt();
-        while(escolha != 1 && escolha != 2 && escolha !=3) {
-           System.out.print("Escolha o modo de jogo: \n 1. Contra máquina \n 2. Contra um jogador \n 3. Sair");
-        escolha = leitor.nextInt(); 
-        }
+        String[] opcoes = {"Contra máquina", "Contra um jogador"};
+
+        escolha = JOptionPane.showOptionDialog(null, "Escolha o modo de jogo:", "Select one:", 
+                                                      0, 3, null, opcoes, opcoes[0]);
+        
+        Tabuleiro tab = new Tabuleiro();
         switch(escolha) {
-        }
-    }
-
-    
-    
-    //Gerar Tabuleiro =======================================================================
-    
-    private static char letra = 65;
-    private static int numero = 1, W, H;
-    public static int[][] tabuleiro = new int[W][H];
-    
-    public static void gerarTabuleiro() {
-         W = Integer.parseInt(JOptionPane.showInputDialog("Informe a largura do tabuleiro \n os valores disponíveis são de 3 até 20:"));
-            while(W <3 || W >= 36) {
-                W = Integer.parseInt(JOptionPane.showInputDialog("Informe a largura do tabuleiro \n os valores disponíveis são de 3 até 20:"));
-            }
-        H = Integer.parseInt(JOptionPane.showInputDialog("Informe a altura do tabuleiro. \n   O número não pode ter mais de 5 pontos de diferença da largura"));
-            while(H < W-5 || H >20 || H > W+5) {
-                H = Integer.parseInt(JOptionPane.showInputDialog("Informe a altura do tabuleiro. \n   O número não pode ter mais de 5 pontos de diferença da largura"));
-            }
-        int b = 0;
-        
-        for (int i = 0; i <= W; i++) {
-            if (i == 0) {
-                System.out.print("   ");
-                for (int l = 0; l < W; l++) {
-
-                    System.out.print(" " + letra + " ");
-
-                    letra++;
-
-                }
-                System.out.print("\n");
-            } else {
-                System.out.print(numero);
-                numero++;
-                for (int f = 1; f <= H; f++) {
-                    if (f == 1 && numero <= 10) {
-                        System.out.print("  | ");
-                    } else {
-                        System.out.print(" | ");
-                    }
-                    b++;
-                }
-                System.out.print(" |\n");
-            }
-        }
-    }
-    public static void gerarNavios() {
-        //dependendo do tamanho do tabuleiro, gera mais navios        
-        int qtdNavios;
-        int area = W*H;
-        
-        if( area % 2 == 0) {
-            
-        }else if(area % 3 == 0 || area % 5 == 0 || area % 7 == 0 || area % 13 == 0 ){
-            
+            case 0 -> tab.gerarTabuleiro();
+            case 1 -> System.exit(0);
+            default -> System.exit(0);
         }
     }
 }
