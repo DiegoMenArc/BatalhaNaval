@@ -108,8 +108,14 @@ public class BatalhaNaval {
     public static int[][] tabuleiro = new int[W][H];
     
     public static void gerarTabuleiro() {
-        W = Integer.parseInt(JOptionPane.showInputDialog("Innforme a largura(linhas verticias ---) do tabuleiro:"));
-        H = Integer.parseInt(JOptionPane.showInputDialog("Innforme a altura do tabuleiro:"));
+         W = Integer.parseInt(JOptionPane.showInputDialog("Informe a largura do tabuleiro \n os valores disponíveis são de 3 até 20:"));
+            while(W <3 || W >= 36) {
+                W = Integer.parseInt(JOptionPane.showInputDialog("Informe a largura do tabuleiro \n os valores disponíveis são de 3 até 20:"));
+            }
+        H = Integer.parseInt(JOptionPane.showInputDialog("Informe a altura do tabuleiro. \n   O número não pode ter mais de 5 pontos de diferença da largura"));
+            while(H < W-5 || H >20 || H > W+5) {
+                H = Integer.parseInt(JOptionPane.showInputDialog("Informe a altura do tabuleiro. \n   O número não pode ter mais de 5 pontos de diferença da largura"));
+            }
         int b = 0;
         
         for (int i = 0; i <= W; i++) {
@@ -136,6 +142,17 @@ public class BatalhaNaval {
                 }
                 System.out.print(" |\n");
             }
+        }
+    }
+    public static void gerarNavios() {
+        //dependendo do tamanho do tabuleiro, gera mais navios        
+        int qtdNavios;
+        int area = W*H;
+        
+        if( area % 2 == 0) {
+            
+        }else if(area % 3 == 0 || area % 5 == 0 || area % 7 == 0 || area % 13 == 0 ){
+            
         }
     }
 }
