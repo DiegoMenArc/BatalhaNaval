@@ -1,13 +1,13 @@
 package batalhanaval;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+
+import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Tabuleiro {
 
-    private static char letra = 65;         //Letra Superior do tabuleiro
-    private static int numero = 1, W, H;    //Determina o tamanho do tabuleiiro
+    public static char letra = 65;         //Letra Superior do tabuleiro
+    private static int numero = 1, W;    //Determina o tamanho do tabuleiiro
  
     private ArrayList<Integer> tabuleiro = new ArrayList<Integer>(); //quando o array estiver 0 = agua, 1 = navio, 2 = bomba 
     private ArrayList<Boolean> tabselec  = new ArrayList<Boolean>(); //Determina se a posição já foi selecionada ou não;
@@ -28,10 +28,47 @@ public class Tabuleiro {
             this.tabselec.add (false);
         }
         
-        this.tabuleiro.set(5, 1);
-        this.tabselec.set(5, true);
-        System.out.println(tabselec.get(1));
-        renderizar();
+        Random gerador = new Random();
+        int vezes = 0;
+        while(vezes != W){            
+            int pos = gerador.nextInt(W*W);
+            boolean tem = false;
+            
+            if(this.tabuleiro.get(pos)==1){
+                tem = true;
+            }
+            while(tem){
+                pos = gerador.nextInt(W*W);
+                    if(this.tabuleiro.get(pos)==1){
+                    tem = true;
+                }
+            }
+            
+            this.tabuleiro.set(pos, 1);
+            vezes++;
+        }
+        
+        // Gerar bombas
+        vezes = 0;
+        while(vezes != W){            
+            int pos = gerador.nextInt(W*W);
+            boolean tem = true;
+            
+//            if(this.tabuleiro.get(pos)==1||this.tabuleiro.get(pos)==2){
+//                tem = true;
+//            }
+//            while(tem){
+//                pos = gerador.nextInt(W*W);
+//                    if(this.tabuleiro.get(pos)==1||this.tabuleiro.get(pos)==2){
+//                    tem = true;
+//                }
+//            }
+            
+            this.tabuleiro.set(pos, 2);
+            vezes++;
+        }
+        
+        
     }
 
     // Renderizar tabuleiro
@@ -55,7 +92,7 @@ public class Tabuleiro {
                     numero++;
                     a++;
                 }
-                System.out.print(   (!this.tabselec.get(soma-1))    ? " * ":
+                System.out.print(   (this.tabselec.get(soma-1))    ? " * ":
                                     (this.tabuleiro.get(soma-1)==0) ? " ~ ":
                                     (this.tabuleiro.get(soma-1)==1) ? " O ":" X ");
                 if(soma%W==0){
@@ -70,7 +107,7 @@ public class Tabuleiro {
     public static void gerarNavios() {
         //dependendo do tamanho do tabuleiro, gera mais navios        
         int qtdN, areaT;
-        areaT = W*H;
+        areaT = W*W;
         if (areaT <= 36) {
             qtdN = 5;
         } else if(areaT <= 81){
@@ -83,7 +120,7 @@ public class Tabuleiro {
     public void Validacao(){
         int cont = 0;
         for (int i = 0; i < W; i++) {
-            for (int f = 0; f < H; f++) {
+            for (int f = 0; f < W; f++) {
                 //System.out.println(this.tabselec[i][f]);
             }
             
