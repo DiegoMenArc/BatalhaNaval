@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 public class BatalhaNaval {
     public static Scanner leitor = new Scanner(System.in);
     public static Tabuleiro tab = new Tabuleiro();
+    public static Tabuleiro tab2 = new Tabuleiro();
     public static void main(String[] args) {
         exibirMenu();
     }
@@ -81,7 +82,7 @@ public class BatalhaNaval {
         
         Tabuleiro tab = new Tabuleiro();
         switch(escolha) {
-            case 0 -> {tab.gerarTabuleiro();jogar();}
+            case 0 -> jogar();
             case 1 -> System.exit(0);
             default -> System.exit(0);
         }
@@ -90,6 +91,7 @@ public class BatalhaNaval {
     // Jogar 
     
     public static void jogar(){
+        tab.gerarTabuleiro();
         tab.renderizar();
     }
 }
