@@ -2,12 +2,14 @@ package batalhanaval;
 
 
 import java.util.*;
+import java.util.regex.*;
 import javax.swing.JOptionPane;
 
 public class Tabuleiro {
 
     public static char letra = 65;         //Letra Superior do tabuleiro
     private static int numero = 1, W;    //Determina o tamanho do tabuleiiro
+    private final Scanner leitor = new Scanner(System.in);
  
     private ArrayList<Integer> tabuleiro = new ArrayList<Integer>(); //quando o array estiver 0 = agua, 1 = navio, 2 = bomba 
     private ArrayList<Boolean> tabselec  = new ArrayList<Boolean>(); //Determina se a posição já foi selecionada ou não;
@@ -102,18 +104,6 @@ public class Tabuleiro {
             }
         }
     }
-
-    //Gerar Navios ==========================================================================================
-    public static void gerarNavios() {
-        //dependendo do tamanho do tabuleiro, gera mais navios        
-        int qtdN, areaT;
-        areaT = W*W;
-        if (areaT <= 36) {
-            qtdN = 5;
-        } else if(areaT <= 81){
-            qtdN = 8;
-        }
-    }
     
     //Verificar se ainda pode jogar ============================================================================================
     
@@ -130,7 +120,28 @@ public class Tabuleiro {
     
     //Jogada do usuario ======================================================================================================== 
     
-    public void Jogar(String posicao){
-        String letra;
+    public void Jogar(){
+        Pattern pattern = Pattern.compile("^[a-zA-Z]{1}+[0-9]{1,2}$");
+        int pos=0;
+        
+        System.out.println("\n\nDigite a posição");
+        String posicao = leitor.nextLine();
+        Matcher matcher = pattern.matcher(posicao);
+        
+        while(!matcher.find()){
+            System.out.println("Valor invalido, digite novamente!");
+            posicao = leitor.nextLine();
+            matcher = pattern.matcher(posicao);
+        }
+        pattern = Pattern.compile("[0-9]{1,2}");
+        matcher = pattern.matcher(posicao);
+
+        if (matcher.find()) {
+            pos = Integer.parseInt(matcher.group());
+        }
+        char letraa = posicao.toUpperCase().charAt(0);
+        
+        System.out.println("Numero: "+ pos);
+        System.out.println("Caracter: "+ letraa);
     }
 }

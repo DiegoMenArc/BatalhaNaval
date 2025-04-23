@@ -5,7 +5,6 @@ import java.util.Scanner;
 //import java.util.Random;
 //commit teste do rapha haha
 
-//comentario talvez de certo 1çldçldçldç 0
 
 import javax.swing.JOptionPane;
 
@@ -93,5 +92,6 @@ public class BatalhaNaval {
     public static void jogar(){
         tab.gerarTabuleiro();
         tab.renderizar();
+        tab.Jogar();
     }
 }
