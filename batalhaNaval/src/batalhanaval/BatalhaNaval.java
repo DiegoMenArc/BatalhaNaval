@@ -92,6 +92,5 @@ public class BatalhaNaval {
     public static void jogar(){
         tab.gerarTabuleiro();
         tab.renderizar();
-        tab.Jogar();
     }
 }

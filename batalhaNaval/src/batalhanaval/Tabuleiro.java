@@ -77,11 +77,13 @@ public class Tabuleiro {
 
     public void renderizar(){
         System.out.println(this.tabselec.get(1));
+        numero = 1;
+        letra = 65;
         System.out.print("   ");
         for (int l = 1; l <= W; l++) {
-            System.out.printf(" %c ", letra);
+            System.out.printf((l <= 9) ? " %d ":" %d", numero);
 
-            letra++;
+            numero++;
 
         }
         System.out.print("\n\n");
@@ -90,11 +92,11 @@ public class Tabuleiro {
             int a = 0;
             for (int f = 1; f <= W; f++) {
                 if(a==0){
-                    System.out.printf((i <= 9) ? "%d  " : "%d ", numero);
-                    numero++;
+                    System.out.printf("%c  ", letra);
+                    letra++;
                     a++;
                 }
-                System.out.print(   (this.tabselec.get(soma-1))    ? " * ":
+                System.out.print(   (!this.tabselec.get(soma-1))    ? " * ":
                                     (this.tabuleiro.get(soma-1)==0) ? " ~ ":
                                     (this.tabuleiro.get(soma-1)==1) ? " O ":" X ");
                 if(soma%W==0){
@@ -103,6 +105,7 @@ public class Tabuleiro {
                 soma++;
             }
         }
+        Jogar();
     }
     
     //Verificar se ainda pode jogar ============================================================================================
@@ -141,7 +144,19 @@ public class Tabuleiro {
         }
         char letraa = posicao.toUpperCase().charAt(0);
         
-        System.out.println("Numero: "+ pos);
-        System.out.println("Caracter: "+ letraa);
+        if(letraa > letra || pos > W){
+            System.out.println("Valor Invalido!");
+            Jogar();    
+        }
+        else{
+            Troca(pos, letraa);
+            renderizar();
+        }
+    }
+    
+    public void Troca(int pos,char letraa){
+        int posdf = (pos + (letraa-65)*W)-1;
+        
+        this.tabselec.set(posdf, true);
     }
 }
