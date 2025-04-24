@@ -10,76 +10,63 @@ public class Tabuleiro {
     public static char letra = 65;         //Letra Superior do tabuleiro
     private static int numero = 1, W;    //Determina o tamanho do tabuleiiro
     private final Scanner leitor = new Scanner(System.in);
+    private Random gerador = new Random();
+    
+    private int escolha;
+    String[] opcoes = {"Jogar Novamente", "Sair"};
  
-    private ArrayList<Integer> tabuleiro = new ArrayList<Integer>(); //quando o array estiver 0 = agua, 1 = navio, 2 = bomba 
+    private ArrayList<Integer>
+            tabuleiro = new ArrayList<Integer>(); //quando o array estiver 0 = agua, 1 = navio, 2 = bomba 
     private ArrayList<Boolean> tabselec  = new ArrayList<Boolean>(); //Determina se a posição já foi selecionada ou não;
     
 
     // Gerar Tabuleiro 
     
     public void gerarTabuleiro() {
+        boolean tem = true;
+        int pos = 0;
+        
         W = Integer.parseInt(JOptionPane.showInputDialog("Informe o número de linhas e colunas. \n se você colocar 26, serão 26 linhas e 26 colunas."));
         while (W > 26) {
             //como as letras só vão até o 26, eu escolhi atribuir este limite
             W = Integer.parseInt(JOptionPane.showInputDialog("O limite é 26!, Digite novamente"));
         }
         
-        //Adicionando os valores iniciais nos arrays
+        //Adicionando os valores iniciais nos arrays ================================================================================
         for(int i = 1; i <= W*W; i++){
             this.tabuleiro.add(0);
             this.tabselec.add (false);
         }
         
-        Random gerador = new Random();
+        //Gerando os Navios =========================================================================================================
+        
         int vezes = 0;
-        while(vezes != W){            
-            int pos = gerador.nextInt(W*W);
-            boolean tem = false;
+        while(vezes != W){  
             
-            if(this.tabuleiro.get(pos)==1){
-                tem = true;
-            }
-            while(tem){
-                pos = gerador.nextInt(W*W);
-                    if(this.tabuleiro.get(pos)==1){
-                    tem = true;
+            while(true){
+                pos = this.gerador.nextInt(W*W);
+                if(this.tabuleiro.get(pos)==0){
+                    this.tabuleiro.set(pos, 1);
+                    break;
                 }
-            }
-            
-            this.tabuleiro.set(pos, 1);
+            }    
+            while(true){
+                pos = this.gerador.nextInt(W*W);
+                if(this.tabuleiro.get(pos)==0){
+                    this.tabuleiro.set(pos, 2);
+                    break;
+                }
+            }           
             vezes++;
-        }
-        
-        // Gerar bombas
-        vezes = 0;
-        while(vezes != W){            
-            int pos = gerador.nextInt(W*W);
-            boolean tem = true;
-            
-//            if(this.tabuleiro.get(pos)==1||this.tabuleiro.get(pos)==2){
-//                tem = true;
-//            }
-//            while(tem){
-//                pos = gerador.nextInt(W*W);
-//                    if(this.tabuleiro.get(pos)==1||this.tabuleiro.get(pos)==2){
-//                    tem = true;
-//                }
-//            }
-            
-            this.tabuleiro.set(pos, 2);
-            vezes++;
-        }
-        
-        
+        }  
     }
 
-    // Renderizar tabuleiro
+    // Renderizar tabuleiro ==========================================================================================
 
     public void renderizar(){
-        System.out.println(this.tabselec.get(1));
         numero = 1;
         letra = 65;
-        System.out.print("   ");
+        System.out.print("  ");
         for (int l = 1; l <= W; l++) {
             System.out.printf((l <= 9) ? " %d ":" %d", numero);
 
@@ -110,16 +97,45 @@ public class Tabuleiro {
     
     //Verificar se ainda pode jogar ============================================================================================
     
-    public void Validacao(){
-        int cont = 0;
-        for (int i = 0; i < W; i++) {
-            for (int f = 0; f < W; f++) {
-                //System.out.println(this.tabselec[i][f]);
+    public void menuFinal(String texto){
+        this.escolha = JOptionPane.showOptionDialog(null,texto,"Select one:", 
+                                                      0, 3, null, this.opcoes, this.opcoes[0]);           
+            switch (escolha) {
+            case 0:
+                BatalhaNaval.modosJogo();
+                break;
+            case 1:
+                System.exit(0);
+            default:
+                BatalhaNaval.modosJogo();
             }
-            
+    }
+    
+    public void Validacao(){
+        int acertados=0;
+        int erros=0;
+        
+        int pos = 0;
+        for(int valor: this.tabuleiro){
+            if(valor==1 && this.tabselec.get(pos)){
+                acertados++;
+            }else if(valor==2 && this.tabselec.get(pos)){
+                erros++;
+            }
+            pos++;
         }
         
+        System.out.printf("\nNavios restantes: %d\nVidas: %d\n\n",W-acertados,W-erros);
+        
+        if(acertados==W){
+            menuFinal("Parabens afundou todas as embarcações!!");
+                
+        }else if(erros==W){
+            menuFinal("Você perdeu todas as suas vidas\nGame Over");
+            
+        }
     }
+    
     
     //Jogada do usuario ======================================================================================================== 
     
@@ -150,6 +166,7 @@ public class Tabuleiro {
         }
         else{
             Troca(pos, letraa);
+            Validacao();
             renderizar();
         }
     }

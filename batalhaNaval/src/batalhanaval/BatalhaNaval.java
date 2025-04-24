@@ -24,7 +24,6 @@ public class BatalhaNaval {
         escolha = JOptionPane.showOptionDialog(null, "Bem-vindo ao Batalha Naval", "Select one:", 
                                                       0, 3, null, opcoes, opcoes[0]);
         
-        System.out.print(escolha);
         switch (escolha) {
             case 0:
                 modosJogo();
