@@ -147,10 +147,17 @@ public class Tabuleiro {
         String posicao = leitor.nextLine();
         Matcher matcher = pattern.matcher(posicao);
         
+        if("SAIR".equals(posicao.toUpperCase())){
+            BatalhaNaval.exibirMenu();
+        }
+        
         while(!matcher.find()){
             System.out.println("Valor invalido, digite novamente!");
             posicao = leitor.nextLine();
             matcher = pattern.matcher(posicao);
+            if("SAIR".equals(posicao.toUpperCase())){
+                BatalhaNaval.exibirMenu();
+            }
         }
         pattern = Pattern.compile("[0-9]{1,2}");
         matcher = pattern.matcher(posicao);
