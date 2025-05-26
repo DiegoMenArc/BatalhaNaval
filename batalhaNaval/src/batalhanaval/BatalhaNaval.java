@@ -26,7 +26,8 @@ public class BatalhaNaval {
         
         switch (escolha) {
             case 0:
-                modosJogo();
+                //modosJogo();
+                jogar();
                 break;
             case 1:
                 exibirTutorial();
@@ -42,10 +43,9 @@ public class BatalhaNaval {
     //Menu Tutorial ========================================================================================
     
     public static void exibirTutorial() {
-        int escolhaT;
-        System.out.print(""" 
+        JOptionPane.showMessageDialog(null, """ 
                          As regras para jogar s\u00e3o:  
-                         1. Escolha se vai jogar contra um jogador ou contra uma m\u00e1quina.  
+                         1. Iniciar jogo.  
                          2. Determinare o tamnho do tabuleiro.  
                          3. O n\u00famero de navios vai ser definido com base no tamanho do tabuleiro.  
                          -3.1. Caso o jogador escolha o modo contra m\u00e1quina, ter\u00e1 um limite de erros.  
@@ -54,20 +54,10 @@ public class BatalhaNaval {
                          -4.2 .Ao errar o ataque, aparecer\u00e1 um X no lugar. EXEMPLO: |X|.  
                          5. Fim do jogo:  
                          -5.1. Caso afunde todos os navios, ganha o jogo. 
-                         -5.2. Caso gaste todas as tentativas, o njogador perde.  
+                         -5.2. Caso gaste todas as tentativas, o njogador perde.
+                         -5.3. Caso digite "Sair", voltará para tela de inicio.
                          """);
-        
-        System.out.print("Pronto pra continuar? \n 1. Sim \n 2. Sair");
-        escolhaT = leitor.nextInt();
-        while(escolhaT != 1 && escolhaT != 2){
-            System.out.print("Escolha uma função válida: \n 1. Sim \n 2. Sair");
-            escolhaT = leitor.nextInt();
-        }
-        
-        switch(escolhaT) {
-            case 1 -> exibirMenu();
-            case 2 -> System.exit(0);
-        }
+        exibirMenu();
     }
     
     //Modo de Jogo ==========================================================================================
